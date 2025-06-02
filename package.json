@@ -4,20 +4,21 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node backend/server.js",  
-    "dev": "nodemon backend/server.js"  
+    "start": "node backend/server.js",
+    "dev": "nodemon backend/server.js"
   },
   "engines": {
-    "node": "18.x"  
+    "node": "18.x"
   },
   "type": "module",
   "dependencies": {
     "cors": "^2.8.5",
     "dotenv": "^16.5.0",
     "express": "^5.1.0",
-    "morgan": "^1.10.0"
+    "morgan": "^1.10.0",
+    "mysql2": "^3.14.1"
   },
   "devDependencies": {
-    "nodemon": "^3.1.0"  
-}
+    "nodemon": "^3.1.0"
+  }
 }
