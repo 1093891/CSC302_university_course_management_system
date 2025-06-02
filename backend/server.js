@@ -3,6 +3,9 @@ import cors from 'cors';
 import { createPool } from 'mysql2/promise'; // Use mysql2/promise for async/await
 import path from 'path'; // Import path module
 import { fileURLToPath } from 'url'; // Correct import for fileURLToPath in ES modules
+import { configDotenv } from 'dotenv';
+
+configDotenv(); // Load environment variables from .env file
 
 const app = express();
 const PORT = 8080;
@@ -30,11 +33,11 @@ app.use(express.static(frontendPath));
 
 // Connect to the database using a connection pool
 const datapool = createPool({
-    host: '127.0.0.1',
-    user: 'Isaac',
-    password: '0000',
-    database: 'university_database',
-    port: 3306,
+    host: process.env.DB_HOST || 'localhost',
+    user: process.env.DB_USER || 'Isaac',
+    password: process.env.DB_PASSWORD || '0000',
+    database: process.env.DB_NAME || 'university_database',
+    port: process.env.DB_PORT || 3306,
     waitForConnections: true,
     connectionLimit: 10,
     queueLimit: 0
