@@ -19,7 +19,7 @@ const __dirname = path.dirname(__filename);
 const frontendPath = path.join(__dirname, '..', 'client', 'doc_html', 'admin');
 
 const corsOptions = {
-    origin: 'http://127.0.0.1:5500', // Ensure this matches your frontend's actual origin for Live Server
+    origin: 'https://app-8d8cf157-1ab5-4af1-8764-ac50e6f681f3.cleverapps.io', // Ensure this matches your frontend's actual origin for Live Server
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
     allowedHeaders: ['Content-Type', 'Authorization'],
 };
