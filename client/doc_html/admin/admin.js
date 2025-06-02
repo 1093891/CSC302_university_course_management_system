@@ -612,6 +612,7 @@ pageInitializers.editStudent = async function (studentId) {
         }
 
         try {
+            console.log("student Id", studentId, 'is going to edition', updatedStudentData);
             await sendData(`/student/${studentId}`, 'PUT', updatedStudentData);
             showMessageBox('Success', 'Student updated successfully!');
             handleMenu('student', 'View Student');

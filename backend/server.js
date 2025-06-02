@@ -460,8 +460,7 @@ app.post('/api/student', async (req, res) => {
 // Update a student by StudentID
 app.put('/api/student/:studentId', async (req, res) => {
     const { studentId } = req.params;
-    console.log(req.body);
-    const { FirstName, LastName, Email, PhoneNumber, Address, DOB, Gender, EnrollmentDate, DepartmentID } = req.body;
+    const { FirstName, LastName, Gender, DOB, Address,PhoneNumber, Email, EnrollmentDate, DepartmentID } = req.body;
     try {
         const [result] = await datapool.query(
             'UPDATE Student SET FirstName = ?, LastName = ?, Email = ?, PhoneNumber = ?, Address = ?, DOB = ?, Gender = ?, EnrollmentDate = ?, DepartmentID = ? WHERE StudentID = ?',
