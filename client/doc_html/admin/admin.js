@@ -1,7 +1,7 @@
 // admin.js
 
 // Base URL for your Node.js backend API
-const API_BASE_URL = 'http://localhost:8080/api';
+const API_BASE_URL = 'https://app-8d8cf157-1ab5-4af1-8764-ac50e6f681f3.cleverapps.io/api';
 
 // Object to hold references to page initialization functions
 // This ensures they are accessible by string name after parsing the entire script.
