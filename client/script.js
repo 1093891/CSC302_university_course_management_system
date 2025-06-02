@@ -15,7 +15,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const userData = async () => {
             try {
                 // CORRECTED: Changed port from 3000 to 8080 to match Express server
-                const response = await fetch('http://localhost:8080/api/user', {
+                const response = await fetch('https://app-8d8cf157-1ab5-4af1-8764-ac50e6f681f3.cleverapps.io/api/api/user', {
                     method: 'GET',
                     headers: {
                         'Content-Type': 'application/json'
