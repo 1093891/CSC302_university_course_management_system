@@ -43,14 +43,136 @@ const datapool = createPool({
     queueLimit: 0
 });
 
-// Test database connection
+/**
+ * Initializes the database schema by creating tables if they do not already exist.
+ * Based on the provided ER Diagram.
+ */
+async function initializeDatabaseSchema() {
+    console.log('Attempting to initialize database schema...');
+    let connection;
+    try {
+        connection = await datapool.getConnection();
+        console.log('Database connection acquired for schema initialization.');
+
+        // SQL statements to create tables based on the ER Diagram
+        // Order matters for foreign key dependencies
+        const createTableQueries = [
+            `CREATE TABLE IF NOT EXISTS Department (
+                DepartmentID INT PRIMARY KEY,
+                DepartmentName VARCHAR(255) NOT NULL UNIQUE
+            );`,
+            `CREATE TABLE IF NOT EXISTS ClassRoom (
+                RoomNumber INT PRIMARY KEY,
+                ClassRoomType VARCHAR(50),
+                Capacity INT,
+                Building VARCHAR(255),
+                DepartmentID INT,
+                PhoneNumber VARCHAR(15),
+                FOREIGN KEY (DepartmentID) REFERENCES Department(DepartmentID)
+            );`,
+            `CREATE TABLE IF NOT EXISTS Schedules (
+                ScheduleID INT PRIMARY KEY,
+                StartTime TIME NOT NULL,
+                EndTime TIME NOT NULL,
+                DayOfWeek VARCHAR(10) NOT NULL
+            );`,
+            `CREATE TABLE IF NOT EXISTS Semester (
+                SemesterID INT PRIMARY KEY,
+                Year INT NOT NULL,
+                Season VARCHAR(50) NOT NULL,
+                UNIQUE (Year, Season)
+            );`,
+            `CREATE TABLE IF NOT EXISTS Course (
+                CourseCode VARCHAR(50) PRIMARY KEY,
+                Title VARCHAR(255) NOT NULL,
+                CreditHours INT NOT NULL,
+                CourseType VARCHAR(50),
+                Description TEXT,
+                DepartmentID INT,
+                FOREIGN KEY (DepartmentID) REFERENCES Department(DepartmentID)
+            );`,
+            `CREATE TABLE IF NOT EXISTS Faculty (
+                FacultyID INT PRIMARY KEY,
+                FullName VARCHAR(255) NOT NULL,
+                Designation VARCHAR(100),
+                HireDate DATE,
+                PhoneNumber VARCHAR(15),
+                Email VARCHAR(255) UNIQUE,
+                DepartmentID INT,
+                FOREIGN KEY (DepartmentID) REFERENCES Department(DepartmentID)
+            );`,
+            `CREATE TABLE IF NOT EXISTS Student (
+                StudentID INT PRIMARY KEY,
+                FirstName VARCHAR(255) NOT NULL,
+                LastName VARCHAR(255) NOT NULL,
+                Gender VARCHAR(10),
+                DOB DATE,
+                Address TEXT,
+                PhoneNumber VARCHAR(15),
+                Email VARCHAR(255) UNIQUE,
+                EnrollmentDate DATE,
+                DepartmentID INT,
+                FOREIGN KEY (DepartmentID) REFERENCES Department(DepartmentID)
+            );`,
+            `CREATE TABLE IF NOT EXISTS User (
+                UserID VARCHAR(255) PRIMARY KEY, -- Changed to VARCHAR based on existing code usage
+                Password VARCHAR(255) NOT NULL,
+                Role VARCHAR(50) NOT NULL,
+                FacultyID INT NULL,
+                StudentID INT NULL,
+                FOREIGN KEY (FacultyID) REFERENCES Faculty(FacultyID),
+                FOREIGN KEY (StudentID) REFERENCES Student(StudentID)
+            );`,
+            `CREATE TABLE IF NOT EXISTS Section (
+                SectionID INT PRIMARY KEY,
+                CourseCode VARCHAR(50) NOT NULL,
+                SemesterID INT NOT NULL,
+                ScheduleID INT NOT NULL,
+                RoomNumber INT,
+                FacultyID INT,
+                FOREIGN KEY (CourseCode) REFERENCES Course(CourseCode),
+                FOREIGN KEY (SemesterID) REFERENCES Semester(SemesterID),
+                FOREIGN KEY (ScheduleID) REFERENCES Schedules(ScheduleID),
+                FOREIGN KEY (RoomNumber) REFERENCES ClassRoom(RoomNumber),
+                FOREIGN KEY (FacultyID) REFERENCES Faculty(FacultyID)
+            );`,
+            `CREATE TABLE IF NOT EXISTS Enrollment (
+                StudentID INT NOT NULL,
+                SectionID INT NOT NULL,
+                Grade VARCHAR(20),
+                PRIMARY KEY (StudentID, SectionID),
+                FOREIGN KEY (StudentID) REFERENCES Student(StudentID),
+                FOREIGN KEY (SectionID) REFERENCES Section(SectionID)
+            );`
+        ];
+
+        for (const query of createTableQueries) {
+            console.log(`Executing query: ${query.substring(0, 50)}...`); // Log first 50 chars
+            await connection.query(query);
+        }
+        console.log('Database schema initialized successfully!');
+
+    } catch (err) {
+        console.error('Error initializing database schema:', err);
+        // It's crucial to handle this error appropriately in a production environment.
+        // For development, you might let the server continue, but it won't function correctly.
+        // For production, you might want to exit the process or trigger alerts.
+    } finally {
+        if (connection) connection.release(); // Release the connection back to the pool
+    }
+}
+
+// Test database connection and initialize schema
 datapool.getConnection()
-    .then(connection => {
+    .then(async connection => { // Use async here because initializeDatabaseSchema is async
         console.log('Database connected successfully!');
         connection.release(); // Release the connection back to the pool
+        await initializeDatabaseSchema(); // Initialize schema after successful connection
     })
     .catch(err => {
         console.error('Database connection failed:', err);
+        // Exit the process if database connection fails on startup
+        process.exit(1);
     });
 
 // Root endpoint - Redirect to login page
@@ -1140,7 +1262,7 @@ app.put('/api/section/:sectionId', async (req, res) => {
             [StartTime, EndTime, DayOfWeek, existingScheduleID]
         );
 
-        const [result] = await connection.query(
+        const [result] = await datapool.query(
             'UPDATE Section SET CourseCode = ?, SemesterID = ?, FacultyID = ?, RoomNumber = ? WHERE SectionID = ?',
             [CourseCode, SemesterID, FacultyID, RoomNumber, sectionId]
         );
