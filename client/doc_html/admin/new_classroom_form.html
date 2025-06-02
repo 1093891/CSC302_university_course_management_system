@@ -1,0 +1,38 @@
+<div class="form-container">
+    <h2 class="form-title">Add Classroom</h2>
+    <form id="new-classroom-form">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div class="form-group">
+                <label for="roomNumber">Room Number:</label>
+                <input type="text" id="roomNumber" name="roomNumber" placeholder="e.g., 101" required>
+            </div>
+            <div class="form-group">
+                <label for="classroomType">Classroom Type:</label>
+                <input type="text" id="classroomType" name="classroomType" placeholder="e.g., Lecture Hall, Lab" required>
+            </div>
+            <div class="form-group">
+                <label for="capacity">Capacity:</label>
+                <input type="number" id="capacity" name="capacity" min="1" placeholder="e.g., 50" required>
+            </div>
+            <div class="form-group">
+                <label for="building">Building:</label>
+                <input type="text" id="building" name="building" placeholder="e.g., Main Building" required>
+            </div>
+            <div class="form-group">
+                <label for="departmentId">Department:</label>
+                <select id="departmentId" name="departmentId" required>
+                    <option value="">Loading Departments...</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="phoneNumber">Phone Number:</label>
+                <input type="text" id="phoneNumber" name="phoneNumber" placeholder="e.g., +1234567890" required>
+            </div>
+        </div>
+
+        <div class="form-buttons">
+            <button type="submit" class="save-button">Submit</button>
+            <button type="button" class="clear-button">Clear</button>
+        </div>
+    </form>
+</div>

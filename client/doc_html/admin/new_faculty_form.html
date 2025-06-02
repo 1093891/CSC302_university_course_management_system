@@ -1,0 +1,72 @@
+<div class="form-container">
+    <h2 class="form-title">New Faculty Form</h2>
+    <form id="new-faculty-form">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div class="form-group">
+                <label for="facultyId">Faculty ID:</label>
+                <input type="text" id="facultyId" name="facultyId" placeholder="e.g., F001" required>
+            </div>
+            <div class="form-group">
+                <label for="firstName">First Name:</label>
+                <input type="text" id="firstName" name="firstName" placeholder="e.g., Jane" required>
+            </div>
+            <div class="form-group">
+                <label for="lastName">Last Name:</label>
+                <input type="text" id="lastName" name="lastName" placeholder="e.g., Smith" required>
+            </div>
+            <div class="form-group">
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" placeholder="e.g., jane.smith@example.com" required>
+            </div>
+            <div class="form-group">
+                <label for="phone">Phone:</label>
+                <input type="text" id="phone" name="phone" placeholder="e.g., +1234567890">
+            </div>
+            <div class="form-group">
+                <label for="address">Address:</label>
+                <input type="text" id="address" name="address" placeholder="e.g., 456 Oak Ave">
+            </div>
+            <div class="form-group">
+                <label for="hiredDate">Hired Date:</label>
+                <input type="date" id="hiredDate" name="hiredDate">
+            </div>
+            <div class="form-group">
+                <label for="department">Department:</label>
+                <select id="department" name="department" required>
+                    <option value="">Loading Departments...</option>
+                </select>
+            </div>
+            <div class="form-group col-span-full">
+                <label for="designation">Designation:</label>
+                <input type="text" id="designation" name="designation" placeholder="e.g., Professor, Lecturer" required>
+            </div>
+        </div>
+
+        <div class="form-buttons">
+            <button type="submit" class="save-button">Save Faculty</button>
+            <button type="button" class="clear-button">Clear</button>
+        </div>
+    </form>
+</div>
+
+<div id="user-creation-modal-overlay" class="modal-overlay hidden">
+    <div class="modal-content">
+        <h3 id="user-creation-modal-title" class="modal-title">Create User Login</h3>
+        <div class="form-group">
+            <label id="associated-id-label" class="block text-gray-700 text-sm font-bold mb-2"></label>
+            <span id="associated-id-display" class="text-gray-900 text-lg font-semibold"></span>
+        </div>
+        <div class="form-group">
+            <label for="user-creation-username">Username:</label>
+            <input type="text" id="user-creation-username" placeholder="Enter username" required>
+        </div>
+        <div class="form-group">
+            <label for="user-creation-password">Password:</label>
+            <input type="password" id="user-creation-password" placeholder="Enter password" required>
+        </div>
+        <div class="flex justify-end gap-4 mt-6">
+            <button type="button" class="modal-button" onclick="submitUserCreationForm()">Create User</button>
+            <button type="button" class="clear-button bg-gray-400 hover:bg-gray-500 text-gray-800" onclick="closeUserCreationModal()">Cancel</button>
+        </div>
+    </div>
+</div>

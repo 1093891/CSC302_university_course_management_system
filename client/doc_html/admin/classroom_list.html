@@ -1,0 +1,30 @@
+<div class="list-container">
+    <h2 class="list-title">Classroom List</h2>
+
+    <div class="search-controls">
+        <div class="search-input-group">
+            <input type="text" id="classrooms-search-input" placeholder="Search by Room Number, Type, Building, Phone" class="flex-grow">
+            <button id="classrooms-search-button">Search</button>
+        </div>
+        <button id="classrooms-reset-button" class="search-reset-button">Reset</button>
+    </div>
+
+    <div class="data-table-container">
+        <table class="data-table" id="classrooms-table">
+            <thead>
+                <tr>
+                    <th>Room Number</th>
+                    <th>Classroom Type</th>
+                    <th>Capacity</th>
+                    <th>Building</th>
+                    <th>Phone Number</th>
+                    <th>Department ID</th>
+                    <th class="text-center">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr><td colspan="7" class="text-center py-4">Loading classrooms...</td></tr>
+            </tbody>
+        </table>
+    </div>
+</div>

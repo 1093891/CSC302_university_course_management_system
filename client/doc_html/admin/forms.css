@@ -1,0 +1,171 @@
+/* forms.css */
+
+/* General form container styling */
+.form-container {
+    background-color: #ffffff;
+    padding: 32px; /* p-8 */
+    border-radius: 8px; /* rounded-lg */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* shadow-md */
+}
+
+/* Form title styling */
+.form-title {
+    font-size: 30px; /* text-3xl */
+    font-weight: bold;
+    color: #333333; /* text-gray-800 */
+    margin-bottom: 24px; /* mb-6 */
+    text-align: center; /* text-center */
+}
+
+/* Grid layout for form groups */
+.form-container form > div {
+    display: grid;
+    grid-template-columns: 1fr; /* grid-cols-1 */
+    gap: 16px; /* gap-4 */
+}
+
+@media (min-width: 768px) { /* md:grid-cols-2 */
+    .form-container form > div {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+/* Input field groups */
+.form-group {
+    margin-bottom: 16px; /* mb-4 */
+}
+
+.form-group label {
+    display: block; /* block */
+    color: #4b5563; /* text-gray-700 */
+    font-size: 14px; /* text-sm */
+    font-weight: bold;
+    margin-bottom: 8px; /* mb-2 */
+}
+
+.form-group input[type="text"],
+.form-group input[type="email"],
+.form-group input[type="password"],
+.form-group input[type="date"],
+.form-group input[type="time"],
+.form-group input[type="number"],
+.form-group select,
+.form-group textarea {
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05); /* shadow */
+    appearance: none;
+    border: 1px solid #d1d5db; /* border */
+    border-radius: 4px; /* rounded */
+    width: calc(100% - 22px); /* w-full, adjusted for padding/border */
+    padding: 8px 12px; /* py-2 px-3 */
+    color: #374151; /* text-gray-700 */
+    line-height: 1.25; /* leading-tight */
+    outline: none; /* focus:outline-none */
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.form-group input[type="text"]:focus,
+.form-group input[type="email"]:focus,
+.form-group input[type="password"]:focus,
+.form-group input[type="date"]:focus,
+.form-group input[type="time"]:focus,
+.form-group input[type="number"]:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+    border-color: transparent;
+    box-shadow: 0 0 0 2px rgba(5, 150, 105, 0.5); /* focus:ring-2 focus:ring-emerald-500 */
+}
+
+.form-group textarea {
+    resize: vertical; /* resize-y */
+}
+
+/* Full-width column for grid items */
+.col-span-full {
+    grid-column: span 1 / span 2; /* For 2-column grid, makes it span full width */
+}
+
+/* Button styling for forms */
+.form-buttons {
+    display: flex; /* flex */
+    justify-content: flex-end; /* justify-end */
+    gap: 16px; /* gap-4 */
+    margin-top: 24px; /* mt-6 */
+}
+
+.form-buttons button {
+    padding: 8px 24px; /* px-6 py-2 */
+    border-radius: 6px; /* rounded-md */
+    font-weight: 600; /* font-semibold */
+    transition: background-color 0.2s ease, box-shadow 0.2s ease; /* transition duration-200 shadow-md */
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    border: none;
+    cursor: pointer;
+}
+
+.form-buttons .save-button {
+    background-color: #059669; /* bg-emerald-600 */
+    color: #ffffff; /* text-white */
+}
+
+.form-buttons .save-button:hover {
+    background-color: #047857; /* hover:bg-emerald-700 */
+}
+
+.form-buttons .clear-button {
+    background-color: #ef4444; /* bg-red-500 */
+    color: #ffffff; /* text-white */
+}
+
+.form-buttons .clear-button:hover {
+    background-color: #dc2626; /* hover:bg-red-600 */
+}
+
+/* Modal specific styles (for user creation and enrollment) */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5); /* bg-black bg-opacity-50 */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 50;
+}
+
+.modal-overlay.hidden {
+    display: none;
+}
+
+.modal-content {
+    background-color: #ffffff;
+    padding: 32px; /* p-8 */
+    border-radius: 8px; /* rounded-lg */
+    box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1); /* shadow-xl */
+    max-width: 448px; /* max-w-md */
+    width: 100%;
+    text-align: center;
+}
+
+.modal-title {
+    font-size: 24px; /* text-2xl */
+    font-weight: bold;
+    margin-bottom: 16px; /* mb-4 */
+    color: #333333; /* text-gray-800 */
+}
+
+.modal-button {
+    padding: 8px 24px; /* px-6 py-2 */
+    background-color: #059669; /* bg-emerald-600 */
+    color: #ffffff; /* text-white */
+    font-weight: 600; /* font-semibold */
+    border-radius: 6px; /* rounded-md */
+    transition: background-color 0.2s ease; /* transition duration-200 */
+    border: none;
+    cursor: pointer;
+}
+
+.modal-button:hover {
+    background-color: #047857; /* hover:bg-emerald-700 */
+}

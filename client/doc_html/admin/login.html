@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - University Management</title>
+    <link rel="stylesheet" href="forms.css"> <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-color: #f0f0f0; /* Light gray background */
+            margin: 0;
+        }
+        .login-container {
+            background-color: #ffffff;
+            padding: 40px;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 400px;
+            text-align: center;
+        }
+        .login-title {
+            font-size: 28px;
+            font-weight: bold;
+            color: #333333;
+            margin-bottom: 30px;
+        }
+        .form-group label {
+            text-align: left;
+            width: 100%;
+            margin-bottom: 5px;
+        }
+        .form-group input {
+            width: calc(100% - 20px); /* Adjust for padding */
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            margin-bottom: 15px;
+        }
+        .login-button {
+            background-color: #2E8B57; /* Green */
+            color: white;
+            padding: 12px 25px;
+            font-size: 18px;
+            font-weight: bold;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+            width: 100%;
+        }
+        .login-button:hover {
+            background-color: #256f4e; /* Darker green */
+        }
+        .error-message {
+            color: #f44336;
+            margin-top: 15px;
+            font-size: 14px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <h2 class="login-title">Login</h2>
+        <form id="login-form">
+            <div class="form-group">
+                <label for="username">Username:</label>
+                <input type="text" id="username" name="username" required>
+            </div>
+            <div class="form-group">
+                <label for="password">Password:</label>
+                <input type="password" id="password" name="password" required>
+            </div>
+            <button type="submit" class="login-button">Login</button>
+            <p id="login-error-message" class="error-message"></p>
+        </form>
+    </div>
+
+    <div id="message-box-modal" class="modal-overlay hidden">
+        <div class="modal-content">
+            <h3 id="message-box-title" class="modal-title"></h3>
+            <p id="message-box-content" class="modal-message-text"></p>
+            <div class="modal-buttons-group">
+                <button class="modal-button message-box-ok-button">OK</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const API_BASE_URL = 'http://localhost:8080/api';
+
+        document.getElementById('login-form').addEventListener('submit', async (event) => {
+            event.preventDefault();
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            const errorMessageDiv = document.getElementById('login-error-message');
+            errorMessageDiv.textContent = ''; // Clear previous errors
+
+            try {
+                const response = await fetch(`${API_BASE_URL}/login`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ username, password }),
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    // Login successful
+                    localStorage.setItem('loggedInUser', JSON.stringify(data.user)); // Store user data
+                    
+                    if (data.user.Role === 'admin') {
+                        window.location.href = 'admin.html';
+                    } else if (data.user.Role === 'student') {
+                        window.location.href = 'student_dashboard.html';
+                    } else if (data.user.Role === 'faculty') {
+                        // Redirect to faculty dashboard
+                        window.location.href = 'faculty_dashboard.html'; 
+                    } else {
+                        // Fallback for unknown roles
+                        showMessageBox('Login Success', 'Unknown user role. Redirecting to login.', 'info', () => {
+                             window.location.href = 'login.html'; 
+                        });
+                    }
+                } else {
+                    // Login failed
+                    errorMessageDiv.textContent = data.error || 'Login failed. Please try again.';
+                }
+            } catch (error) {
+                console.error('Login error:', error);
+                errorMessageDiv.textContent = 'An error occurred during login. Please try again later.';
+            }
+        });
+
+        // --- Re-using global message box functions from admin.js/student_dashboard.js ---
+        function showMessageBox(title, message, type = 'info', onConfirm = null) {
+            const modal = document.getElementById('message-box-modal');
+            const modalTitle = document.getElementById('message-box-title');
+            const modalContent = document.getElementById('message-box-content');
+            const okButton = modal.querySelector('.message-box-ok-button');
+            
+            if (modal && modalTitle && modalContent && okButton) {
+                modalTitle.textContent = title;
+                modalContent.textContent = message;
+                okButton.classList.remove('hidden');
+                okButton.onclick = () => {
+                    closeMessageBox();
+                    if (onConfirm) onConfirm(true); 
+                };
+                modal.classList.remove('hidden');
+            }
+        }
+
+        function closeMessageBox() {
+            const modal = document.getElementById('message-box-modal');
+            if (modal) {
+                modal.classList.add('hidden');
+            }
+        }
+    </script>
+</body>
+</html>

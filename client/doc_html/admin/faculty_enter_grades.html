@@ -1,0 +1,71 @@
+<div class="list-container">
+    <h2 class="list-title">Enter Grades</h2>
+
+    <div class="search-controls">
+        <div class="filter-group">
+            <label for="grading-semester-select">Select Semester:</label>
+            <select id="grading-semester-select" class="form-input">
+                <option value="">Loading semesters...</option>
+            </select>
+        </div>
+        <div class="filter-group">
+            <label for="grading-course-section-select">Select Course/Section:</label>
+            <select id="grading-course-section-select" class="form-input">
+                <option value="">No courses available</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="data-table-container">
+        <table class="data-table" id="grading-student-table">
+            <thead>
+                <tr>
+                    <th>Student ID</th>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>Grade</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr><td colspan="4" class="text-center py-4">Select a course section to view students.</td></tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<style>
+    /* Specific styles for faculty_enter_grades.html (can be in faculty_dashboard.css) */
+    .list-container {
+        max-width: 900px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+    .search-controls {
+        justify-content: flex-start; /* Align filters to left */
+        flex-wrap: wrap;
+        gap: 15px; /* Space between filter groups */
+    }
+    .filter-group {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+    .editable-grade {
+        cursor: pointer;
+        font-weight: bold;
+        color: #1E88E5; /* Blue to indicate interactivity */
+    }
+    .editable-grade:hover {
+        text-decoration: underline;
+    }
+    .editable-grade.editing {
+        background-color: #e0f2f7; /* Light blue background when editing */
+    }
+    .grade-input {
+        padding: 5px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        font-size: 14px;
+        text-align: center;
+    }
+</style>

@@ -1,0 +1,26 @@
+<div class="list-container">
+    <h2 class="list-title">Department List</h2>
+
+    <div class="search-controls">
+        <div class="search-input-group">
+            <input type="text" id="departments-search-input" placeholder="Search by ID or Name" class="flex-grow">
+            <button id="departments-search-button">Search</button>
+        </div>
+        <button id="departments-reset-button" class="search-reset-button">Reset</button>
+    </div>
+
+    <div class="data-table-container">
+        <table class="data-table" id="departments-table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Department Name</th>
+                    <th class="text-center">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr><td colspan="3" class="text-center py-4">Loading departments...</td></tr>
+            </tbody>
+        </table>
+    </div>
+</div>

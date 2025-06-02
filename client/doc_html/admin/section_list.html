@@ -1,0 +1,32 @@
+<div class="list-container">
+    <h2 class="list-title">Section List</h2>
+
+    <div class="search-controls">
+        <div class="search-input-group">
+            <input type="text" id="sections-search-input" placeholder="Search by ID, Course, Semester, Year, Season, Day" class="flex-grow">
+            <button id="sections-search-button">Search</button>
+        </div>
+        <button id="sections-reset-button" class="search-reset-button">Reset</button>
+    </div>
+
+    <div class="data-table-container">
+        <table class="data-table" id="sections-table">
+            <thead>
+                <tr>
+                    <th>Section ID</th>
+                    <th>Course Code</th>
+                    <th>Semester ID</th>
+                    <th>Year</th>
+                    <th>Season</th>
+                    <th>Start Time</th>
+                    <th>End Time</th>
+                    <th>Day of Week</th>
+                    <th class="text-center">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr><td colspan="9" class="text-center py-4">Loading sections...</td></tr>
+            </tbody>
+        </table>
+    </div>
+</div>

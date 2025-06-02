@@ -1,0 +1,244 @@
+/* admin.css */
+
+/* Custom font (using Inter for now, you can change to Arial if preferred and available) */
+body {
+    font-family: 'Inter', sans-serif; /* Or 'Arial', sans-serif; */
+    margin: 0;
+    display: flex;
+    height: 100vh;
+    overflow: hidden; /* Prevent scrolling on the main body */
+    background-color: #f0f0f0; /* bg-gray-100 from your previous HTML, now more uniform light gray */
+}
+
+.dashboard-container {
+    display: flex;
+    width: 100%;
+    height: 100%;
+}
+
+/* Navigation Frame - Matching image */
+.navigation-frame {
+    width: 250px; /* Adjusted width to match image visual */
+    background-color: #2E8B57; /* Dark green from your original Python code */
+    color: #ffffff; /* White text */
+    display: flex;
+    flex-direction: column;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.2); /* Subtle shadow */
+    padding: 0; /* Remove overall padding */
+    padding-top: 20px; /* Add padding at top */
+    padding-bottom: 10px; /* Add padding at bottom */
+}
+
+.admin-panel-title {
+    font-size: 24px; /* Adjusted size to match image */
+    font-weight: bold;
+    color: #ffffff;
+    background-color: #2E8B57; /* Match background */
+    margin: 0; /* Reset default margins */
+    padding: 0 20px; /* Padding from Python code */
+    padding-bottom: 20px; /* Additional padding */
+    text-align: left; /* anchor="w" equivalent */
+}
+
+.welcome-message {
+    font-size: 14px; /* Adjusted size to match image */
+    color: #ffffff;
+    background-color: #2E8B57; /* Match background */
+    margin: 0; /* Reset default margins */
+    padding: 0 20px; /* Padding from Python code */
+    padding-bottom: 10px;
+    text-align: left; /* anchor="w" equivalent */
+}
+
+.menu-sections {
+    flex-grow: 1; /* Allows this section to take up available space */
+    overflow-y: auto; /* Enable scrolling for menu items if they exceed height */
+    padding: 0; /* Remove overall padding */
+}
+
+/* Specific styling for each menu item block */
+.menu-item {
+    background-color: #2E8B57; /* Match nav background */
+    padding: 0 20px; /* Horizontal padding for consistent alignment */
+    margin-bottom: 0; /* No vertical margin between menu item containers */
+    padding-bottom: 10px; /* Padding at bottom of each section */
+}
+
+.menu-item label {
+    display: block;
+    font-size: 12px; /* Font size for management labels */
+    font-weight: bold;
+    color: #ffffff;
+    background-color: #2E8B57; /* Match background */
+    padding-top: 10px; /* Padding above label */
+    padding-bottom: 5px; /* Padding below label */
+    text-align: left; /* anchor="w" equivalent */
+}
+
+.menu-item select {
+    width: 100%;
+    padding: 5px 8px; /* Smaller padding for dropdowns */
+    border-radius: 4px; /* Slightly rounded corners */
+    border: none;
+    background-color: lightgray; /* lightgray from Python */
+    color: #333; /* Darker text color */
+    font-size: 12px; /* Matching Python font size */
+    cursor: pointer;
+    box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1); /* Subtle inner shadow */
+    outline: none;
+    transition: background-color 0.15s ease;
+}
+
+.menu-item select:hover {
+    background-color: #ccc; /* Slightly darker on hover */
+}
+
+.bottom-buttons {
+    margin-top: auto;
+    padding: 10px 20px; /* Adjusted padding */
+    border-top: 1px solid #4CAF50; /* A slightly different green border for separation */
+    display: flex;
+    justify-content: space-between;
+    gap: 10px; /* Space between buttons */
+}
+
+.bottom-buttons button {
+    flex: 1;
+    padding: 8px 12px; /* Adjusted padding */
+    font-size: 12px; /* Adjusted font size */
+    font-weight: bold;
+    border: 1px solid transparent; /* No border by default, use custom color */
+    border-radius: 4px; /* Rounded corners */
+    cursor: pointer;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.15s ease, border-color 0.15s ease;
+}
+
+.reports-button {
+    background-color: lightgray; /* lightgray from Python */
+    color: #333;
+    border-color: #ccc;
+}
+
+.reports-button:hover {
+    background-color: #c0c0c0;
+    border-color: #b0b0b0;
+}
+
+.logout-button {
+    background-color: #f44336; /* Red from Python */
+    color: #ffffff;
+    border-color: #d32f2f;
+}
+
+.logout-button:hover {
+    background-color: #d32f2f;
+    border-color: #b71c1c;
+}
+
+/* Content Frame */
+.content-frame {
+    flex-grow: 1;
+    padding: 10px; /* Reduced padding to give more space for forms */
+    background-color: #f0f0f0; /* Light gray matching image */
+    overflow-y: auto;
+}
+
+/* Initial content styling (welcome message on dashboard) */
+.content-frame > div {
+    background-color: #ffffff;
+    padding: 20px; /* Smaller padding for main content */
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.content-frame h2 {
+    font-size: 24px; /* Adjusted size */
+    font-weight: bold;
+    color: #333333;
+    margin-bottom: 10px;
+}
+
+.content-frame p {
+    color: #4b5563;
+    font-size: 16px;
+}
+
+.content-frame img {
+    margin-left: auto;
+    margin-right: auto;
+    border-radius: 8px;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+    margin-top: 20px;
+}
+
+/* Message Box Modal - Same as before, using common CSS */
+#message-box-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 50;
+}
+
+#message-box-modal.hidden {
+    display: none;
+}
+
+#message-box-modal > div {
+    background-color: #ffffff;
+    padding: 24px;
+    border-radius: 8px;
+    box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+    max-width: 384px;
+    width: 100%;
+    text-align: center;
+}
+
+#message-box-title {
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 16px;
+    color: #333333;
+}
+
+#message-box-content {
+    color: #4b5563;
+    margin-bottom: 24px;
+}
+
+#message-box-modal .flex { /* Target the button container */
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+}
+
+#message-box-modal button {
+    padding: 8px 24px;
+    background-color: #059669; /* green */
+    color: #ffffff;
+    font-weight: 600;
+    border-radius: 6px;
+    transition: background-color 0.2s ease;
+    border: none;
+    cursor: pointer;
+}
+
+#message-box-modal button.message-box-cancel-button {
+    background-color: #9e9e9e; /* gray */
+    color: #1f2937;
+}
+
+#message-box-modal button:hover {
+    background-color: #047857;
+}
+
+#message-box-modal button.message-box-cancel-button:hover {
+    background-color: #757575;
+}

@@ -1,0 +1,21 @@
+<div id="user-creation-modal-overlay" class="modal-overlay hidden">
+    <div class="modal-content">
+        <h3 id="user-creation-modal-title" class="modal-title">Create User Login</h3>
+        <div class="form-group">
+            <label id="associated-id-label" class="block text-gray-700 text-sm font-bold mb-2"></label>
+            <span id="associated-id-display" class="text-gray-900 text-lg font-semibold"></span>
+        </div>
+        <div class="form-group">
+            <label for="user-creation-username">Username:</label>
+            <input type="text" id="user-creation-username" placeholder="Enter username" required>
+        </div>
+        <div class="form-group">
+            <label for="user-creation-password">Password:</label>
+            <input type="password" id="user-creation-password" placeholder="Enter password" required>
+        </div>
+        <div class="flex justify-end gap-4 mt-6">
+            <button type="button" class="modal-button" onclick="submitUserCreationForm()">Create User</button>
+            <button type="button" class="clear-button bg-gray-400 hover:bg-gray-500 text-gray-800" onclick="closeUserCreationModal()">Cancel</button>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,45 @@
+<div class="list-container">
+    <h2 class="list-title">My Courses</h2>
+
+    <div class="search-controls">
+        <div class="filter-group">
+            <label for="course-view-semester-select">Select Semester:</label>
+            <select id="course-view-semester-select" class="form-input">
+                <option value="">Loading semesters...</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="data-table-container">
+        <table class="data-table" id="faculty-course-table">
+            <thead>
+                <tr>
+                    <th>Course Code</th>
+                    <th>Course Name</th>
+                    <th>Section ID</th>
+                    <th>Time Slot</th>
+                    <th>Days</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr><td colspan="5" class="text-center py-4">Loading courses...</td></tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<style>
+    /* Specific styles for faculty_my_courses.html (can be in faculty_dashboard.css) */
+    .list-container {
+        max-width: 900px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+    .search-controls {
+        justify-content: flex-start; /* Align filter to left */
+        flex-wrap: wrap;
+    }
+    .filter-group {
+        margin-right: 15px; /* Space between filter and table */
+    }
+</style>

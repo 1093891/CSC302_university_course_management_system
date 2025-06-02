@@ -1,0 +1,34 @@
+<div class="list-container">
+    <h2 class="list-title">Reports Dashboard</h2>
+
+    <div class="reports-controls">
+        <div class="filter-group-container">
+            <div class="filter-group">
+                <label for="report-select">Select Report:</label>
+                <select id="report-select"></select>
+            </div>
+            <div class="filter-group">
+                <label for="view-select">View As:</label>
+                <select id="view-select">
+                    <option value="Table">Table</option>
+                    <option value="Graph">Graph</option>
+                </select>
+            </div>
+        </div>
+        <div id="filter-options-container" class="filter-options-container">
+            </div>
+    </div>
+
+    <div id="report-display-area" class="report-display-area">
+        <p id="initial-report-message" class="loading-message">Select a report to view its data.</p>
+
+        <div id="report-table-view" class="report-view-container hidden">
+            </div>
+
+        <div id="report-chart-view" class="report-view-container hidden">
+            <div class="chart-container">
+                <canvas id="myChart"></canvas>
+            </div>
+        </div>
+    </div>
+</div>

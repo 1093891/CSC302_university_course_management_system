@@ -1,0 +1,168 @@
+/* student_dashboard.css */
+
+/* Consistent font */
+body {
+    font-family: 'Inter', sans-serif;
+    margin: 0;
+    display: flex;
+    height: 100vh;
+    overflow: hidden;
+    background-color: #f3f4f6; /* Light gray background */
+}
+
+.dashboard-container {
+    display: flex;
+    width: 100%;
+    height: 100%;
+}
+
+/* Navigation Frame - Adjusted for Student Dashboard look */
+.navigation-frame {
+    width: 250px;
+    background-color: #4CAF50; /* A slightly lighter green for student nav */
+    color: #ffffff;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.2);
+    padding: 20px 0 10px 0;
+}
+
+.student-panel-title { /* Specific title for student dashboard */
+    font-size: 24px;
+    font-weight: bold;
+    color: #ffffff;
+    background-color: #4CAF50;
+    margin: 0;
+    padding: 0 20px 20px 20px;
+    text-align: left;
+}
+
+.welcome-message {
+    font-size: 14px;
+    color: #ffffff;
+    background-color: #4CAF50;
+    margin: 0;
+    padding: 0 20px 10px 20px;
+    text-align: left;
+}
+
+.menu-sections {
+    flex-grow: 1;
+    overflow-y: auto;
+    padding: 0;
+}
+
+.menu-sections { /* Hide scrollbar */
+    -ms-overflow-style: none;
+    
+}
+
+.menu-sections::-webkit-scrollbar {
+    display: none;
+}
+
+.menu-items-group {
+    display: flex;
+    flex-direction: column;
+    gap: 5px; /* Slightly less gap for menu buttons */
+    padding: 0 20px;
+}
+
+.menu-item {
+    background-color: #4CAF50; /* Match nav background */
+    padding: 0;
+    margin: 0;
+}
+
+.menu-button { /* Styling for the actual buttons in the nav */
+    width: 100%;
+    padding: 10px 15px;
+    border: none;
+    background-color: #66BB6A; /* Lighter green for buttons */
+    color: #ffffff;
+    font-size: 14px;
+    font-weight: bold;
+    text-align: left;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: background-color 0.2s ease, box-shadow 0.2s ease;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.menu-button:hover {
+    background-color: #81C784; /* Even lighter green on hover */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.bottom-buttons {
+    margin-top: auto;
+    padding: 10px 20px;
+    border-top: 1px solid #388E3C; /* Darker green border */
+    display: flex;
+    justify-content: center; /* Center logout button */
+    gap: 10px;
+}
+
+.logout-button {
+    flex: 1;
+    padding: 8px 12px;
+    font-size: 12px;
+    font-weight: bold;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    cursor: pointer;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.15s ease, border-color 0.15s ease;
+    background-color: #f44336; /* Red */
+    color: #ffffff;
+    border-color: #d32f2f;
+}
+
+.logout-button:hover {
+    background-color: #d32f2f;
+    border-color: #b71c1c;
+}
+
+/* Content Frame (shared with admin.css for basic layout) */
+.content-frame {
+    flex-grow: 1;
+    padding: 10px;
+    background-color: #f0f0f0;
+    overflow-y: auto;
+}
+
+/* Welcome content for initial display */
+.welcome-content {
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.welcome-title {
+    font-size: 24px;
+    font-weight: bold;
+    color: #333333;
+    margin-bottom: 10px;
+}
+
+.welcome-text {
+    color: #4b5563;
+    font-size: 16px;
+}
+
+.welcome-image-container {
+    margin-top: 20px;
+}
+
+.welcome-image {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    border-radius: 8px;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+/* Re-using modal styles from forms.css for consistency */
+/* The #message-box-modal, .modal-overlay, .modal-content, etc. are already covered in forms.css */

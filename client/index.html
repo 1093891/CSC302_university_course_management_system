@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">    
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Client</title>
+    <link rel="stylesheet" href="styles.css" type="text/css">
+    <script src="script.js" defer></script>
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    </head>
+<body>
+   <div class="container">
+    <header>
+        <h1 class="text-center ">University Course Management System</h1>
+    </header>
+
+    <div class="form-container">
+        <form id="loginForm" class="form-horizontal">
+            <div class="form-group">
+                <h2>Login</h2>
+                <label for="username" class="col-sm-2 control-label">Username</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" id="username" placeholder="Enter username" required>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="password" class="col-sm-2 control-label">Password</label>
+                <div class="col-sm-10">
+                    <input type="password" class="form-control" id="password" placeholder="Enter password" required>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-offset-2 col-sm-10">
+                    <button type="submit" class="btn">Login</button>
+                    <button type="button" class="btn btn-secondary" id="resetButton">Reset</button>
+                </div>
+            </div>
+        </form>
+        <div id="errorMessage" class="alert alert-danger" ></div>
+        <div id="successMessage" class="alert alert-success"></div>
+        </div>
+    
+
+        <footer class="">
+            <p>&copy; 2025 University Course Management System</p>
+        </footer>
+   </div>
+</body>
+</html>

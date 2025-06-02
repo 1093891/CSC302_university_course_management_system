@@ -1,0 +1,774 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Facial Attendance Tracker</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Custom styles to override or enhance Tailwind */
+        body {
+            font-family: 'Inter', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            min-height: 100vh;
+            background-color: #f4f7f6; /* Light background */
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            background-color: #ffffff;
+            padding: 30px;
+            border-radius: 12px; /* More rounded corners */
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1); /* Deeper shadow */
+            width: 95%;
+            max-width: 1200px;
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+            border: 1px solid #e0e0e0; /* Subtle border */
+        }
+
+        h1, h2 {
+            text-align: center;
+            color: #2c3e50; /* Darker text for headings */
+            font-weight: 700; /* Bold headings */
+        }
+
+        .video-container {
+            position: relative;
+            width: 100%;
+            max-width: 720px; /* Slightly larger video area */
+            margin: 0 auto;
+            background-color: #000000;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: inset 0 0 8px rgba(0, 0, 0, 0.2); /* Inner shadow for video */
+        }
+
+        #videoInput {
+            width: 100%;
+            height: auto;
+            display: block;
+            transform: scaleX(-1); /* Mirror the video */
+        }
+
+        #overlayCanvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        .status-message {
+            position: absolute;
+            bottom: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: rgba(44, 62, 80, 0.8); /* Darker, more opaque status */
+            color: #ecf0f1;
+            padding: 8px 15px;
+            border-radius: 8px;
+            font-size: 0.95em;
+            white-space: nowrap; /* Prevent text wrapping */
+        }
+
+        .controls {
+            display: flex;
+            flex-wrap: wrap; /* Allow wrapping on smaller screens */
+            justify-content: center;
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        button {
+            padding: 12px 25px;
+            background-color: #3498db; /* Blue button */
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1.05em;
+            font-weight: 600;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        button:hover:not(:disabled) {
+            background-color: #2980b9; /* Darker blue on hover */
+            transform: translateY(-2px); /* Slight lift effect */
+        }
+
+        button:disabled {
+            background-color: #cccccc;
+            cursor: not-allowed;
+            box-shadow: none;
+        }
+
+        .attendance-info, .statistics-section, .registered-faces-management {
+            border: 1px solid #e0e0e0;
+            padding: 20px;
+            border-radius: 10px;
+            background-color: #fdfdfd;
+        }
+
+        #attendanceList, #registeredFacesList {
+            list-style: none;
+            padding: 0;
+            max-height: 250px; /* Slightly taller list */
+            overflow-y: auto;
+            border-top: 1px solid #f0f0f0;
+            margin-top: 15px;
+        }
+
+        #attendanceList li, #registeredFacesList li {
+            padding: 12px 0;
+            border-bottom: 1px solid #f0f0f0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: #555;
+            font-size: 0.95em;
+        }
+
+        #attendanceList li:last-child, #registeredFacesList li:last-child {
+            border-bottom: none;
+        }
+
+        .chart-container {
+            width: 100%;
+            max-height: 450px; /* Taller chart */
+            margin: 20px auto;
+            background-color: #ffffff;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        .filters {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            align-items: center;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        input[type="date"] {
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            font-size: 1em;
+            color: #333;
+            outline: none;
+            transition: border-color 0.3s ease;
+        }
+
+        input[type="date"]:focus {
+            border-color: #3498db;
+            box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.2);
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+                gap: 15px;
+            }
+            .controls button {
+                width: 100%;
+            }
+            .filters {
+                flex-direction: column;
+            }
+        }
+
+        /* Modal Styles */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.6);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+
+        .modal-overlay.show {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal-content {
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            text-align: center;
+            max-width: 400px;
+            width: 90%;
+            transform: translateY(-20px);
+            transition: transform 0.3s ease;
+        }
+
+        .modal-overlay.show .modal-content {
+            transform: translateY(0);
+        }
+
+        .modal-content h3 {
+            margin-top: 0;
+            color: #333;
+            font-size: 1.5em;
+            margin-bottom: 20px;
+        }
+
+        .modal-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 25px;
+        }
+
+        .modal-buttons button {
+            padding: 10px 20px;
+            border-radius: 6px;
+            font-size: 1em;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            box-shadow: none; /* Remove button shadow for modal buttons */
+        }
+
+        .modal-buttons .confirm-button {
+            background-color: #e74c3c; /* Red for confirm */
+            color: white;
+        }
+
+        .modal-buttons .confirm-button:hover {
+            background-color: #c0392b;
+        }
+
+        .modal-buttons .cancel-button {
+            background-color: #bdc3c7; /* Gray for cancel */
+            color: #333;
+        }
+
+        .modal-buttons .cancel-button:hover {
+            background-color: #95a5a6;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Facial Attendance System</h1>
+
+        <div class="video-container">
+            <video id="videoInput" autoplay muted class="w-full h-auto block"></video>
+            <canvas id="overlayCanvas" class="absolute top-0 left-0 w-full h-full"></canvas>
+            <div id="status" class="status-message">Loading models...</div>
+        </div>
+
+        <div class="controls">
+            <button id="startCameraButton" class="rounded-lg">Start Camera</button>
+            <button id="stopCameraButton" class="rounded-lg">Stop Camera</button>
+            <button id="registerFaceButton" class="rounded-lg" disabled>Register New Face</button>
+        </div>
+
+        <div class="attendance-info rounded-lg">
+            <h2 class="text-xl font-semibold mb-4">Current Attendance for Selected Date</h2>
+            <ul id="attendanceList">
+                </ul>
+        </div>
+
+        <div class="registered-faces-management rounded-lg">
+            <h2 class="text-xl font-semibold mb-4">Registered Faces Management</h2>
+            <ul id="registeredFacesList">
+                </ul>
+            <div class="flex justify-center mt-4">
+                <button id="clearRegisteredFacesButton" class="rounded-lg bg-red-500 hover:bg-red-700">Clear All Registered Faces</button>
+            </div>
+        </div>
+
+        <div class="statistics-section rounded-lg">
+            <h2 class="text-xl font-semibold mb-4">Attendance Statistics</h2>
+            <div class="filters">
+                <label for="dateFilter" class="text-gray-700 font-medium">Filter by Date:</label>
+                <input type="date" id="dateFilter" class="rounded-md">
+                <button id="applyFilterButton" class="rounded-lg">Apply Filter</button>
+            </div>
+            <div class="chart-container">
+                <canvas id="attendanceChart"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <div id="confirmationModal" class="modal-overlay">
+        <div class="modal-content">
+            <h3 id="modalMessage"></h3>
+            <div class="modal-buttons">
+                <button id="modalConfirmButton" class="confirm-button">Confirm</button>
+                <button id="modalCancelButton" class="cancel-button">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/face-api.js@0.22.2/dist/face-api.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <script>
+        // --- DOM Elements ---
+        const videoInput = document.getElementById('videoInput');
+        const overlayCanvas = document.getElementById('overlayCanvas');
+        const statusDiv = document.getElementById('status');
+        const startCameraButton = document.getElementById('startCameraButton');
+        const stopCameraButton = document.getElementById('stopCameraButton');
+        const registerFaceButton = document.getElementById('registerFaceButton');
+        const attendanceList = document.getElementById('attendanceList');
+        const dateFilterInput = document.getElementById('dateFilter');
+        const applyFilterButton = document.getElementById('applyFilterButton');
+        const attendanceChartCanvas = document.getElementById('attendanceChart');
+        const registeredFacesList = document.getElementById('registeredFacesList');
+        const clearRegisteredFacesButton = document.getElementById('clearRegisteredFacesButton');
+
+        // Modal elements
+        const confirmationModal = document.getElementById('confirmationModal');
+        const modalMessage = document.getElementById('modalMessage');
+        const modalConfirmButton = document.getElementById('modalConfirmButton');
+        const modalCancelButton = document.getElementById('modalCancelButton');
+
+        // --- Global Variables ---
+        let mediaStream = null;
+        let labeledFaceDescriptors = []; // Stores registered face data
+        let detectionInterval;
+        let attendanceChart; // Chart.js instance
+
+        // --- Constants for Local Storage Keys ---
+        const REGISTERED_FACES_KEY = 'facialAttendanceRegisteredFaces';
+        const ATTENDANCE_RECORDS_KEY = 'facialAttendanceRecords';
+
+        // --- Helper for displaying messages (replaces alert()) ---
+        function showMessage(message, isError = false) {
+            statusDiv.textContent = message;
+            statusDiv.style.backgroundColor = isError ? 'rgba(231, 76, 60, 0.8)' : 'rgba(44, 62, 80, 0.8)';
+            console.log(message); // Also log to console for debugging
+        }
+
+        // --- Custom Confirmation Modal Logic ---
+        function showConfirmationModal(message) {
+            return new Promise((resolve) => {
+                modalMessage.textContent = message;
+                confirmationModal.classList.add('show');
+
+                const onConfirm = () => {
+                    confirmationModal.classList.remove('show');
+                    modalConfirmButton.removeEventListener('click', onConfirm);
+                    modalCancelButton.removeEventListener('click', onCancel);
+                    resolve(true);
+                };
+
+                const onCancel = () => {
+                    confirmationModal.classList.remove('show');
+                    modalConfirmButton.removeEventListener('click', onConfirm);
+                    modalCancelButton.removeEventListener('click', onCancel);
+                    resolve(false);
+                };
+
+                modalConfirmButton.addEventListener('click', onConfirm);
+                modalCancelButton.addEventListener('click', onCancel);
+            });
+        }
+
+
+        // --- Load Models and Initialize ---
+        async function loadModels() {
+            showMessage('Loading face recognition models...');
+            try {
+                // Changed back to /models for server environments
+                await Promise.all([
+                    faceapi.nets.tinyFaceDetector.loadFromUri('/models'),
+                    faceapi.nets.faceLandmark68Net.loadFromUri('/models'),
+                    faceapi.nets.faceRecognitionNet.loadFromUri('/models'),
+                    faceapi.nets.ssdMobilenetv1.loadFromUri('/models')
+                ]);
+                showMessage('Models loaded successfully. Click "Start Camera".');
+                registerFaceButton.disabled = false;
+                loadRegisteredFacesFromLocalStorage(); // Load any previously registered faces
+                // Set today's date in filter and fetch stats
+                const today = new Date().toISOString().split('T')[0];
+                dateFilterInput.value = today;
+                fetchAndDisplayStatistics(today); // This will also update the attendance list
+            } catch (err) {
+                console.error('Error loading models:', err);
+                showMessage('Error loading face models. Make sure "models" folder is present with weights and accessible from the server root (e.g., http://127.0.0.1:5500/models/).', true);
+            }
+        }
+
+        // --- Local Storage Operations ---
+
+        // Load registered faces from localStorage
+        function loadRegisteredFacesFromLocalStorage() {
+            const storedFaces = localStorage.getItem(REGISTERED_FACES_KEY);
+            if (storedFaces) {
+                const parsedFaces = JSON.parse(storedFaces);
+                labeledFaceDescriptors = parsedFaces.map(faceData => {
+                    return new faceapi.LabeledFaceDescriptors(
+                        faceData.label,
+                        [new Float32Array(faceData.descriptor)]
+                    );
+                });
+                showMessage(`Loaded ${labeledFaceDescriptors.length} registered faces from storage.`);
+            } else {
+                showMessage('No registered faces found in storage.');
+            }
+            updateRegisteredFacesList(); // Update the UI list
+        }
+
+        // Save registered faces to localStorage
+        function saveRegisteredFacesToLocalStorage() {
+            const serializableFaces = labeledFaceDescriptors.map(desc => ({
+                label: desc.label,
+                descriptor: Array.from(desc.descriptors[0])
+            }));
+            localStorage.setItem(REGISTERED_FACES_KEY, JSON.stringify(serializableFaces));
+            updateRegisteredFacesList(); // Update the UI list
+        }
+
+        // Load attendance records from localStorage
+        function loadAttendanceRecordsFromLocalStorage() {
+            const storedRecords = localStorage.getItem(ATTENDANCE_RECORDS_KEY);
+            return storedRecords ? JSON.parse(storedRecords) : [];
+        }
+
+        // Save attendance records to localStorage
+        function saveAttendanceRecordsToLocalStorage(records) {
+            localStorage.setItem(ATTENDANCE_RECORDS_KEY, JSON.stringify(records));
+        }
+
+        // --- Camera Control ---
+        startCameraButton.addEventListener('click', async () => {
+            try {
+                mediaStream = await navigator.mediaDevices.getUserMedia({ video: true });
+                videoInput.srcObject = mediaStream;
+                showMessage('Camera started. Detecting faces...');
+                videoInput.addEventListener('play', () => {
+                    const displaySize = { width: videoInput.videoWidth, height: videoInput.videoHeight };
+                    faceapi.matchDimensions(overlayCanvas, displaySize);
+                    if (detectionInterval) clearInterval(detectionInterval);
+                    detectionInterval = setInterval(async () => {
+                        await detectAndRecognizeFaces();
+                    }, 100);
+                }, { once: true });
+            } catch (err) {
+                console.error('Error accessing camera:', err);
+                showMessage('Error accessing camera. Please ensure camera access is allowed.', true);
+            }
+        });
+
+        stopCameraButton.addEventListener('click', () => {
+            if (mediaStream) {
+                mediaStream.getTracks().forEach(track => track.stop());
+                videoInput.srcObject = null;
+                clearInterval(detectionInterval);
+                overlayCanvas.getContext('2d').clearRect(0, 0, overlayCanvas.width, overlayCanvas.height);
+                showMessage('Camera stopped.');
+            }
+        });
+
+        // --- Face Registration ---
+        registerFaceButton.addEventListener('click', async () => {
+            if (!mediaStream) {
+                showMessage('Please start the camera first to register a new face.', true);
+                return;
+            }
+
+            const personName = prompt('Enter the name of the person to register:');
+            if (personName && personName.trim() !== '') {
+                // Check if name already exists
+                const existingFace = labeledFaceDescriptors.find(d => d.label.toLowerCase() === personName.trim().toLowerCase());
+                if (existingFace) {
+                    showMessage(`A face for "${personName.trim()}" is already registered.`, true);
+                    return;
+                }
+
+                showMessage(`Attempting to register face for ${personName}...`);
+                const detections = await faceapi.detectSingleFace(videoInput, new faceapi.TinyFaceDetectorOptions())
+                                                .withFaceLandmarks()
+                                                .withFaceDescriptor();
+
+                if (detections) {
+                    const newLabeledDescriptor = new faceapi.LabeledFaceDescriptors(
+                        personName.trim(),
+                        [detections.descriptor]
+                    );
+                    labeledFaceDescriptors.push(newLabeledDescriptor);
+                    saveRegisteredFacesToLocalStorage(); // Save to local storage and update UI
+                    showMessage(`Face for ${personName.trim()} registered successfully!`);
+                } else {
+                    showMessage('No face detected. Please ensure your face is clear in the camera.', true);
+                }
+            } else {
+                showMessage('Face registration cancelled or name was empty.', true);
+            }
+        });
+
+        // --- Face Detection and Recognition Loop ---
+        async function detectAndRecognizeFaces() {
+            if (!videoInput.srcObject || videoInput.paused || videoInput.ended) return;
+
+            const displaySize = { width: videoInput.videoWidth, height: videoInput.videoHeight };
+            faceapi.matchDimensions(overlayCanvas, displaySize);
+
+            const detections = await faceapi.detectAllFaces(videoInput, new faceapi.TinyFaceDetectorOptions())
+                                            .withFaceLandmarks()
+                                            .withFaceDescriptors();
+
+            const resizedDetections = faceapi.resizeResults(detections, displaySize);
+            overlayCanvas.getContext('2d').clearRect(0, 0, overlayCanvas.width, overlayCanvas.height);
+            faceapi.draw.drawDetections(overlayCanvas, resizedDetections);
+            faceapi.draw.drawFaceLandmarks(overlayCanvas, resizedDetections);
+
+            if (labeledFaceDescriptors.length === 0) {
+                showMessage('No faces registered yet. Register some faces to enable recognition.');
+                return;
+            }
+
+            const faceMatcher = new faceapi.FaceMatcher(labeledFaceDescriptors, 0.6);
+
+            const recognizedResults = resizedDetections.map(d => faceMatcher.findBestMatch(d.descriptor));
+
+            recognizedResults.forEach((result, i) => {
+                const box = resizedDetections[i].detection.box;
+                const drawBox = new faceapi.draw.DrawBox(box, { label: result.toString() });
+                drawBox.draw(overlayCanvas);
+
+                const label = result.label;
+                const distance = result.distance;
+
+                if (label !== 'unknown' && distance < 0.6) {
+                    // Mark attendance for the current day
+                    markAttendance(label);
+                    showMessage(`Recognized: ${label}`);
+                }
+            });
+
+            if (recognizedResults.length === 0) {
+                showMessage('No faces detected.');
+            } else if (recognizedResults.every(r => r.label === 'unknown' || r.distance >= 0.6)) {
+                showMessage('No registered faces detected or match is too weak.');
+            }
+        }
+
+        // --- Attendance Marking ---
+        async function markAttendance(personName) {
+            const now = new Date();
+            // Get existing records, add new one, and save
+            const allRecords = loadAttendanceRecordsFromLocalStorage();
+            allRecords.push({ name: personName, timestamp: now.toISOString() });
+            saveAttendanceRecordsToLocalStorage(allRecords);
+
+            console.log('Attendance recorded for:', personName, 'at', now.toISOString());
+
+            // After recording, refresh statistics and attendance list for the currently selected date
+            fetchAndDisplayStatistics(dateFilterInput.value);
+        }
+
+        // --- Registered Faces List Management ---
+        function updateRegisteredFacesList() {
+            registeredFacesList.innerHTML = ''; // Clear current list
+            if (labeledFaceDescriptors.length === 0) {
+                const li = document.createElement('li');
+                li.className = 'text-center text-gray-500 py-2';
+                li.textContent = 'No faces registered yet.';
+                registeredFacesList.appendChild(li);
+                return;
+            }
+            labeledFaceDescriptors.forEach(desc => {
+                const li = document.createElement('li');
+                li.className = 'flex justify-between items-center py-2 border-b border-gray-200';
+                li.innerHTML = `<span class="font-medium text-gray-800">${desc.label}</span>`;
+                registeredFacesList.appendChild(li);
+            });
+        }
+
+        clearRegisteredFacesButton.addEventListener('click', async () => {
+            const confirmed = await showConfirmationModal('Are you sure you want to clear ALL registered faces? This cannot be undone.');
+            if (confirmed) {
+                localStorage.removeItem(REGISTERED_FACES_KEY);
+                labeledFaceDescriptors = []; // Clear in-memory array
+                updateRegisteredFacesList(); // Update UI
+                showMessage('All registered faces cleared.');
+            }
+        });
+
+
+        // --- Statistics and Charting ---
+
+        // Fetch and display statistics based on the selected date
+        async function fetchAndDisplayStatistics(date) {
+            const allRecords = loadAttendanceRecordsFromLocalStorage();
+            const targetDate = new Date(date);
+            targetDate.setHours(0, 0, 0, 0); // Start of the selected day
+
+            const nextDay = new Date(targetDate);
+            nextDay.setDate(targetDate.getDate() + 1); // Start of the next day
+
+            // Filter records for the selected date
+            const dailyAttendance = allRecords.filter(record => {
+                const recordDate = new Date(record.timestamp);
+                return recordDate >= targetDate && recordDate < nextDay;
+            });
+
+            // Aggregate unique attendance per person for the day
+            const uniqueDailyAttendanceCounts = {};
+            dailyAttendance.forEach(record => {
+                if (!uniqueDailyAttendanceCounts[record.name]) {
+                    uniqueDailyAttendanceCounts[record.name] = 0;
+                }
+                uniqueDailyAttendanceCounts[record.name]++;
+            });
+
+            // Update the current attendance list display
+            updateAttendanceListDisplay(uniqueDailyAttendanceCounts);
+
+            // Prepare data for Chart.js
+            const stats = Object.keys(uniqueDailyAttendanceCounts).map(name => ({
+                name: name,
+                attendanceCount: uniqueDailyAttendanceCounts[name]
+            }));
+
+            renderAttendanceChart(stats, date);
+        }
+
+        // Update the attendance list UI with counts for the selected date
+        function updateAttendanceListDisplay(dailyCounts) {
+            attendanceList.innerHTML = ''; // Clear current list
+            const sortedNames = Object.keys(dailyCounts).sort(); // Sort names alphabetically
+
+            if (sortedNames.length === 0) {
+                const li = document.createElement('li');
+                li.className = 'text-center text-gray-500 py-2';
+                li.textContent = 'No attendance recorded for this date.';
+                attendanceList.appendChild(li);
+                return;
+            }
+
+            sortedNames.forEach(name => {
+                const count = dailyCounts[name];
+                const li = document.createElement('li');
+                li.className = 'flex justify-between items-center py-2 border-b border-gray-200';
+                li.innerHTML = `<span class="font-medium text-gray-800">${name}</span> <span class="text-gray-600">${count} time(s)</span>`;
+                attendanceList.appendChild(li);
+            });
+        }
+
+
+        // Render/update the Chart.js chart
+        function renderAttendanceChart(stats, date) {
+            const labels = stats.map(s => s.name);
+            const data = stats.map(s => s.attendanceCount);
+
+            if (attendanceChart) {
+                attendanceChart.destroy();
+            }
+
+            attendanceChart = new Chart(attendanceChartCanvas, {
+                type: 'bar',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: `Attendance Count for ${date}`,
+                        data: data,
+                        backgroundColor: 'rgba(52, 152, 219, 0.7)',
+                        borderColor: 'rgba(52, 152, 219, 1)',
+                        borderWidth: 1,
+                        borderRadius: 5,
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            title: {
+                                display: true,
+                                text: 'Number of Times Present'
+                            },
+                            ticks: {
+                                stepSize: 1,
+                                precision: 0
+                            }
+                        },
+                        x: {
+                            title: {
+                                display: true,
+                                text: 'Person'
+                            }
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            display: true,
+                            position: 'top',
+                            labels: {
+                                font: {
+                                    size: 14
+                                }
+                            }
+                        },
+                        title: {
+                            display: true,
+                            text: `Daily Attendance Summary for ${date}`,
+                            font: {
+                                size: 18,
+                                weight: 'bold'
+                            },
+                            color: '#2c3e50'
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    let label = context.dataset.label || '';
+                                    if (label) {
+                                        label += ': ';
+                                    }
+                                    if (context.parsed.y !== null) {
+                                        label += context.parsed.y + ' time(s)';
+                                    }
+                                    return label;
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        // --- Event Listeners and Initial Load ---
+        document.addEventListener('DOMContentLoaded', () => {
+            loadModels(); // Start loading models when the DOM is ready
+
+            // Set today's date as default filter
+            const today = new Date().toISOString().split('T')[0];
+            dateFilterInput.value = today;
+
+            // When date filter changes, refresh both attendance list and chart
+            dateFilterInput.addEventListener('change', () => {
+                fetchAndDisplayStatistics(dateFilterInput.value);
+            });
+
+            applyFilterButton.addEventListener('click', () => {
+                fetchAndDisplayStatistics(dateFilterInput.value);
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Faculty Dashboard</title>
+    <link rel="stylesheet" href="faculty_dashboard.css">
+    <link rel="stylesheet" href="forms.css">
+    <link rel="stylesheet" href="list_common.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body class="font-inter">
+    <div class="dashboard-container">
+        <aside class="navigation-frame">
+            <h1 class="faculty-panel-title">Faculty Panel</h1>
+            <p class="welcome-message" id="faculty-welcome-message">Welcome, Faculty!</p>
+
+            <nav class="menu-sections">
+                <div class="menu-items-group">
+                    <div class="menu-item">
+                        <button class="menu-button" onclick="handleFacultyMenu('my_courses')">My Courses</button>
+                    </div>
+                    <div class="menu-item">
+                        <button class="menu-button" onclick="handleFacultyMenu('enter_grades')">Enter Grades</button>
+                    </div>
+                    <div class="menu-item">
+                        <button class="menu-button" onclick="handleFacultyMenu('my_schedule')">My Schedule</button>
+                    </div>
+                    <div class="menu-item">
+                        <button class="menu-button" onclick="handleFacultyMenu('my_profile')">My Profile</button>
+                    </div>
+                </div>
+            </nav>
+
+            <div class="bottom-buttons">
+                <button class="logout-button" onclick="facultyLogout()">
+                    Logout
+                </button>
+            </div>
+        </aside>
+
+        <main class="content-frame" id="faculty-content-frame">
+            <div class="welcome-content">
+                <h2 class="welcome-title">Welcome to your Faculty Dashboard!</h2>
+                <p class="welcome-text">Select an option from the left navigation to manage your teaching activities.</p>
+                <div class="welcome-image-container">
+                    <img src="https://placehold.co/400x200/F0F8FF/1E88E5?text=Faculty+Success" alt="Faculty Success Placeholder" class="welcome-image">
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <div id="message-box-modal" class="modal-overlay hidden">
+        <div class="modal-content">
+            <h3 id="message-box-title" class="modal-title"></h3>
+            <p id="message-box-content" class="modal-message-text"></p>
+            <div class="modal-buttons-group">
+                <button class="modal-button message-box-ok-button">OK</button>
+                <button class="modal-button message-box-confirm-button hidden">Confirm</button>
+                <button class="modal-button modal-cancel-button message-box-cancel-button hidden">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="faculty_dashboard.js"></script>
+</body>
+</html>

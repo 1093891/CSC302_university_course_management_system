@@ -1,0 +1,297 @@
+/* list_common.css */
+
+/* Common styling for list views (tables, search, buttons) */
+
+.list-container {
+    background-color: #f0f0f0; /* Light gray from forms, consistent */
+    padding: 20px; /* Reduced padding */
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    margin: 10px; /* Margin to separate from content frame edges */
+}
+
+.list-title {
+    font-size: 24px;
+    font-weight: bold;
+    color: navy;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.search-controls {
+    display: flex;
+    flex-direction: row; /* Always row for search controls */
+    align-items: center;
+    justify-content: flex-end; /* Align to right */
+    gap: 10px; /* Smaller gap */
+    margin-bottom: 15px; /* Reduced margin */
+    padding: 10px; /* Reduced padding */
+    background-color: #e0e0e0; /* Slightly darker gray for search bar */
+    border-radius: 5px;
+    box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.08);
+}
+
+.search-input-group {
+    display: flex;
+    flex-grow: 1; /* Allow input to grow */
+    align-items: center;
+    max-width: 350px; /* Constrain search input width */
+}
+
+.search-input-group input {
+    flex-grow: 1;
+    padding: 6px 8px; /* Smaller padding */
+    border: 1px solid #999;
+    border-radius: 3px;
+    outline: none;
+    transition: border-color 0.15s ease, box-shadow 0.15s ease;
+    font-size: 12px; /* Smaller font for search input */
+    box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.08);
+}
+
+.search-input-group input:focus {
+    border-color: #66afe9;
+    box-shadow: 0 0 5px rgba(102, 175, 233, 0.6);
+}
+
+.search-input-group button,
+.search-reset-button {
+    padding: 6px 12px; /* Smaller padding for buttons */
+    font-size: 12px; /* Smaller font for buttons */
+    font-weight: bold;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    transition: background-color 0.15s ease;
+    cursor: pointer;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.search-input-group button {
+    background-color: lightgray; /* Light gray from Python */
+    color: #333;
+    border-color: #bbb;
+    margin-left: 5px; /* Space between input and button */
+}
+
+.search-input-group button:hover {
+    background-color: #c0c0c0;
+    border-color: #aaa;
+}
+
+.search-reset-button {
+    background-color: lightgray; /* Light gray from Python */
+    color: #333;
+    border-color: #bbb;
+}
+
+.search-reset-button:hover {
+    background-color: #c0c0c0;
+    border-color: #aaa;
+}
+
+
+.data-table-container {
+    overflow-x: auto;
+    border-radius: 8px;
+    border: 1px solid #e5e7eb;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    background-color: #ffffff; /* White background for table itself */
+}
+
+.data-table {
+    min-width: 100%;
+    border-collapse: collapse;
+}
+
+.data-table thead th {
+    padding: 10px 12px;
+    background-color: #e0f2f7; /* Light blueish background for headers */
+    color: #2E8B57; /* Dark green text for headers */
+    text-align: left;
+    font-size: 12px;
+    font-weight: bold;
+    text-transform: uppercase;
+    border-bottom: 1px solid #ddd;
+}
+
+.data-table tbody td {
+    padding: 8px 12px;
+    white-space: nowrap;
+    font-size: 13px;
+    color: #333;
+    border-bottom: 1px solid #eee;
+}
+
+.data-table tbody tr:nth-child(odd) {
+    background-color: #fcfcfc;
+}
+
+.data-table tbody tr:nth-child(even) {
+    background-color: #f5f5f5;
+}
+
+.data-table tbody tr:hover {
+    background-color: #e8f5e9;
+}
+
+.actions-column {
+    text-align: center;
+}
+
+.loading-message {
+    text-align: center;
+    padding: 20px;
+    color: #666;
+}
+
+/* Specific styling for action buttons within table cells */
+.action-buttons {
+    text-align: center; /* Center buttons in their cell */
+}
+
+.action-buttons button {
+    padding: 4px 10px;
+    font-size: 11px;
+    border-radius: 3px;
+    transition: background-color 0.15s ease;
+    border: 1px solid transparent;
+    cursor: pointer;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.action-buttons .edit-button {
+    background-color: #2196F3; /* Blue */
+    color: #ffffff;
+    border-color: #1976D2;
+    margin-right: 5px;
+}
+
+.action-buttons .edit-button:hover {
+    background-color: #1976D2;
+    border-color: #0D47A1;
+}
+
+.action-buttons .delete-button {
+    background-color: #F44336; /* Red */
+    color: #ffffff;
+    border-color: #D32F2F;
+    margin-right: 5px; /* Space between delete and enroll */
+}
+
+.action-buttons .delete-button:hover {
+    background-color: #D32F2F;
+    border-color: #B71C1C;
+}
+
+.action-buttons .enroll-button {
+    background-color: #4CAF50; /* Green */
+    color: #ffffff;
+    border-color: #388E3C;
+}
+
+.action-buttons .enroll-button:hover {
+    background-color: #388E3C;
+    border-color: #1B5E20;
+}
+
+/* Reports Dashboard specific controls */
+.reports-controls {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: 15px;
+    margin-bottom: 20px;
+    padding: 15px;
+    background-color: #e0e0e0;
+    border-radius: 8px;
+    box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.08);
+    flex-wrap: wrap; /* Allow filters to wrap on smaller screens */
+}
+
+.filter-group-container { /* New container for "Select Report" and "View As" dropdowns */
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    align-items: center;
+}
+
+.filter-group {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.filter-options-container { /* Container for dynamic filters */
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    align-items: center;
+    margin-top: 10px; /* Space from main controls */
+}
+
+.filter-group label {
+    color: #333;
+    font-size: 13px;
+    font-weight: bold;
+}
+
+.filter-group select,
+.filter-group input[type="number"] {
+    padding: 6px 8px;
+    border: 1px solid #999;
+    border-radius: 3px;
+    font-size: 13px;
+    outline: none;
+    box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.08);
+}
+
+.report-display-area {
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    min-height: 400px; /* Give some space for content */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+/* New: Container for report views (table/chart) */
+.report-view-container {
+    width: 100%; /* Take full width of display area */
+    height: 100%; /* Take full height of display area */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.report-view-container.hidden {
+    display: none;
+}
+
+/* Chart container styles */
+.chart-container {
+    position: relative;
+    width: 100%;
+    height: 400px; /* Fixed height for the chart area */
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.chart-container.hidden {
+    display: none;
+}
+
+/* Table cell styling for reports */
+.table-cell {
+    padding: 8px 12px;
+    border-bottom: 1px solid #eee;
+    font-size: 13px;
+    color: #333;
+    white-space: nowrap;
+}

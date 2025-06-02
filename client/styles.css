@@ -1,0 +1,93 @@
+body{
+    background-image: url('https://img.freepik.com/premium-photo/photo-silhouette-graduation_875232-6759.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    color: white
+}
+h1, h2, h3, h4, h5, h6 {
+    text-align: center;
+    color: #48c4a9;
+    font-family: 'Arial', sans-serif;
+}
+
+.hidden { display: none; }
+.visible { display: block; }
+
+/* Form styles */
+form {
+    background-color:#333;
+    padding: 20px;
+    border-radius: 8px;
+    max-width: 300px;
+    margin: 100px auto;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+
+}
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="date"],
+input[type="tel"] {
+    width: 100%;
+    padding: 10px;
+    margin: 5px 0;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    background-color: #444;
+    color: white;
+}
+.btns{
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+}
+
+.btn{
+    background-color: #4fa135;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    padding: 10px 20px;
+    cursor: pointer;
+    text-decoration: none;
+}
+/* Hidden parts */
+#errorMessage{
+    display: none;
+    color: red;
+    text-align: center;
+    font-size: 1.5em;
+    margin-top: 20px;
+}
+#successMessage{
+    display: none;
+    color: green;
+    text-align: center;
+    font-size: 1.5em;
+    margin-top: 20px;
+}
+footer {
+    position: fixed;
+    bottom: 0;
+    height: 70px;
+    padding:0;
+    width: 100%;
+    background-color: rgb(0, 0, 0);
+    color: white;
+    text-align: center;
+    margin:0;
+    margin-top: 20px;
+    font-size: 1.2em;
+}
+.list_container{
+    margin: 20px auto;
+  display: inline-block;
+    width: 100%;
+    background-color: #444;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}

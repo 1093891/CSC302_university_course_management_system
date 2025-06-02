@@ -1,0 +1,85 @@
+<div class="profile-container" id="faculty-profile-container">
+    <h2 class="profile-title">Loading Faculty Profile...</h2>
+    <p class="loading-message">Please wait while your profile data is being loaded.</p>
+    <div class="welcome-image-container">
+        <img src="https://placehold.co/400x200/F0F8FF/1E88E5?text=Faculty+Profile" alt="Faculty Profile Placeholder" class="welcome-image">
+    </div>
+</div>
+
+<style>
+    /* Specific styles for faculty_my_profile.html (can be in faculty_dashboard.css) */
+    .profile-container {
+        background-color: #ffffff;
+        padding: 25px;
+        border-radius: 8px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        margin: 10px;
+        max-width: 800px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .profile-title {
+        font-size: 28px;
+        font-weight: bold;
+        color: #1E88E5; /* Blue, matching faculty dashboard theme */
+        margin-bottom: 25px;
+        text-align: center;
+    }
+
+    .profile-card {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 15px 25px; /* Row gap, column gap */
+    }
+
+    @media (min-width: 600px) {
+        .profile-card {
+            grid-template-columns: 1fr 1fr;
+        }
+    }
+
+    .profile-detail-group {
+        display: flex;
+        flex-direction: column;
+        padding: 10px 0;
+        border-bottom: 1px solid #eee;
+    }
+
+    .profile-detail-group:last-child {
+        border-bottom: none;
+    }
+
+    .profile-detail-group.full-width {
+        grid-column: span 1 / span 2; /* Spans full width on larger screens */
+    }
+
+    .profile-label {
+        font-size: 13px;
+        font-weight: bold;
+        color: #4b5563; /* Gray-700 */
+        margin-bottom: 4px;
+    }
+
+    .profile-value {
+        font-size: 16px;
+        color: #1f2937; /* Gray-900 */
+        word-wrap: break-word;
+    }
+
+    .course-list {
+        margin-top: 5px;
+        padding-left: 15px;
+    }
+
+    .course-item {
+        margin-bottom: 5px;
+        color: #333;
+    }
+
+    .loading-message {
+        text-align: center;
+        padding: 20px;
+        color: #666;
+    }
+</style>

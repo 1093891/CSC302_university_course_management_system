@@ -1,0 +1,49 @@
+<div class="list-container">
+    <h2 class="list-title">New Enrollment</h2>
+
+    <div class="search-controls">
+        <div class="filter-group">
+            <label for="enrollment-semester-select">Select Semester:</label>
+            <select id="enrollment-semester-select" class="form-input">
+                <option value="">Loading semesters...</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="data-table-container">
+        <table class="data-table" id="available-sections-table">
+            <thead>
+                <tr>
+                    <th>Section ID</th>
+                    <th>Course</th>
+                    <th>Semester</th>
+                    <th>Time</th>
+                    <th>Day</th>
+                    <th>Faculty</th>
+                    <th class="text-center">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr><td colspan="7" class="text-center py-4">Loading available sections...</td></tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<style>
+    /* student_new_enrollment.css (can be integrated into student_dashboard.css or a new file) */
+    /* Reuses styles from list_common.css and forms.css */
+    /* Specific adjustments for enrollment view if needed */
+    .list-container {
+        max-width: 1000px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+    .search-controls {
+        justify-content: flex-start; /* Align filter to left */
+        flex-wrap: wrap;
+    }
+    .filter-group {
+        margin-right: 15px; /* Space between filter and table */
+    }
+</style>
