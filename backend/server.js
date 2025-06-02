@@ -58,6 +58,11 @@ app.get('/', (req, res) => {
     res.sendFile(path.join(frontendPath, 'login.html'));
 });
 
+// Admin Sign Up Page
+app.get('/admin_signup.html', (req, res) => {
+    res.sendFile(path.join(frontendPath, 'admin_signup.html'));
+});
+
 // --- NEW LOGIN ENDPOINT ---
 app.post('/api/login', async (req, res) => {
     const { username, password } = req.body;
