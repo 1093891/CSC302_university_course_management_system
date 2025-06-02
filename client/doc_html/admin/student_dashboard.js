@@ -1,6 +1,6 @@
 // student_dashboard.js
 
-const API_BASE_URL = 'http://localhost:8080/api';
+const API_BASE_URL = 'https://app-8d8cf157-1ab5-4af1-8764-ac50e6f681f3.cleverapps.io/api';
 
 // --- Global Variables for User Session ---
 let loggedInUser = null;
