@@ -461,6 +461,7 @@ app.post('/api/student', async (req, res) => {
 app.put('/api/student/:studentId', async (req, res) => {
     const { studentId } = req.params;
     const { FirstName, LastName, Gender, DOB, Address,PhoneNumber, Email, EnrollmentDate, DepartmentID } = req.body;
+    console.log(req.body);
     try {
         const [result] = await datapool.query(
             'UPDATE Student SET FirstName = ?, LastName = ?, Email = ?, PhoneNumber = ?, Address = ?, DOB = ?, Gender = ?, EnrollmentDate = ?, DepartmentID = ? WHERE StudentID = ?',
@@ -482,9 +483,9 @@ app.put('/api/student/:studentId', async (req, res) => {
 app.delete('/api/student/:studentId', async (req, res) => {
     const { studentId } = req.params;
     try {
-        await datapool.query('SET FOREIGN_KEY_CHECKS=0'); // Temporarily disable FK checks
+        // await datapool.query('SET FOREIGN_KEY_CHECKS=0'); // Temporarily disable FK checks
         const [result] = await datapool.query('DELETE FROM Student WHERE StudentID = ?', [studentId]);
-        await datapool.query('SET FOREIGN_KEY_CHECKS=1'); // Re-enable FK checks
+        // await datapool.query('SET FOREIGN_KEY_CHECKS=1'); // Re-enable FK checks
         if (result.affectedRows > 0) {
             res.json({ message: 'Student deleted successfully!' });
         } else {
@@ -625,6 +626,7 @@ app.post('/api/faculty', async (req, res) => {
 app.put('/api/faculty/:facultyId', async (req, res) => {
     const { facultyId } = req.params;
     const { FullName, Email, PhoneNumber, HireDate, Designation, DepartmentID } = req.body;
+    console.log(req.body);
     try {
         const [result] = await datapool.query(
             'UPDATE Faculty SET FullName = ?, Email = ?, PhoneNumber = ?, HireDate = ?, Designation = ?, DepartmentID = ? WHERE FacultyID = ?',
